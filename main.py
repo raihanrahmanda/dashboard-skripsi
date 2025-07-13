@@ -16,7 +16,7 @@ import traceback
 from datetime import datetime
 import os
 import json
-from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+# from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 
 import io # Untuk menangani gambar dalam memori
 import base64 # Untuk encode gambar ke base64
