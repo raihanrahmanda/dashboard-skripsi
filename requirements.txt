@@ -1,6 +1,4 @@
-beautifulsoup4
 Flask
-imbalanced-learn
 joblib
 matplotlib
 nltk
@@ -8,9 +6,4 @@ numpy
 pandas
 pydotplus
 python-dateutil
-requests
-Sastrawi
-scikit-learn
-torch
-transformers
 wordcloud
