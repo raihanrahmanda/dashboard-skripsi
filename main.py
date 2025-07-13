@@ -26,6 +26,8 @@ matplotlib.use('Agg') # Penting untuk backend matplotlib tanpa GUI
 import matplotlib.pyplot as plt
 # import requests
 
+import gdown
+
 app = Flask(
     __name__,
     template_folder='app/templates',
