@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/traffic-light.svg') }}">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/scraping.css">
+    <title>Dashboard Penelitian</title>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <div class="logo">
+            <a href="{{ url_for('index') }}" class="brand">
+                <img src="{{ url_for('static', filename='img/traffic-light.svg') }}" alt="Logo">
+                JagaLantas
+            </a>
+        </div>
+        <ul class="side-menu">
+            <li><a href="{{ url_for('index') }}"><i class='bx  bxs-user-circle icon'></i> About</a></li>
+            <li><a href="{{ url_for('scraping_page') }}" class="active"><i class='bx  bxs-news icon'></i> Scraping</a>
+            </li>
+            <li><a href="{{ url_for('data_page') }}"><i class='bx  bxs-database icon'></i> Data</a></li>
+            <li><a href="{{ url_for('dashboard_page') }}"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+            <li><a href="{{ url_for('classification_page') }}"><i class='bx  bxs-network-chart icon'></i> Pola</a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- NAVBAR -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu toggle-sidebar'></i>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <h1 class="title">Scraping</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li class="divider">/</li>
+                <li><a href="{{ url_for('scraping_page') }}" class="active">Scraping</a></li>
+            </ul>
+
+            <div class="info-data">
+                <div class="card">
+                    <div class="head-scrap">
+                        <div>
+                            <h2><i>Scraping</i> Berita <i>Online</i></h2>
+                            <p>Klik tombol untuk langsung melakukan scraping berita harian</p>
+                        </div>
+                        <div class="flex-row">
+                            <button id="scrapButton" class="btn-scrap">Scrap Sekarang</button>
+                            <div id="loading" style="display:none;">⏳ Sedang scraping...</div>
+                        </div>
+                        <div id="result"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <h2>Tabel Hasil Bersih <i>Scraping</i> Berita <i>Online</i></h2>
+                        <p>Data terakhir diupdate: <span id="last-update">Memuat...</span></p>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="resultTable">
+                            <thead>
+                                <tr>
+                                    <th>No</th> <!-- Kolom nomor -->
+                                    <th>Judul</th>
+                                    <th>Tanggal</th>
+                                    <th>Link</th>
+                                    <th>Konten</th>
+                                    <th>Relevansi</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- NAVBAR -->
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/scraping.js"></script>
+</body>
+
+</html>

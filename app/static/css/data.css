@@ -1,0 +1,155 @@
+.flex-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#result {
+    margin-top: 10px;
+}
+
+main .info-data {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-wrapper {
+    max-height: 400px;
+    /* Batasi tinggi tabel */
+    overflow-y: auto;
+    /* Aktifkan scroll vertikal */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* TABEL BERITA */
+#NewsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#NewsTable th,
+#NewsTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: top;
+}
+
+#NewsTable th {
+    background-color: var(--blue);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#NewsTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#NewsTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+#NewsTable td:first-child,
+#NewsTable th:first-child {
+    text-align: center;
+    width: 50px;
+}
+
+/* TABEL EKSTRAKSI */
+#ExtractionTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#ExtractionTable th,
+#ExtractionTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: top;
+}
+
+#ExtractionTable th {
+    background-color: var(--blue);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+
+#ExtractionTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#ExtractionTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+#ExtractionTable td:first-child,
+#ExtractionTable th:first-child {
+    text-align: center;
+    width: 50px;
+}
+
+.table-wrapper-datatable {
+    overflow-x: auto;
+    margin-top: 1rem;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    background-color: #fff;
+}
+
+table.dataTable {
+    width: 100%;
+    font-size: 17px;
+}
+
+table.dataTable th,
+table.dataTable td {
+    padding: 10px;
+    text-align: center;
+    border-right: 0.5px solid #ddd;
+    border-left: 0.5px solid #ddd;
+}
+
+table.dataTable thead {
+    background-color: var(--blue);
+    color: #ffff;
+}
+
+
+.dataTables_filter {
+    margin-bottom: 10px;
+}
+
+.dataTables_filter label {
+    font-weight: 500;
+}
+
+.dataTables_filter input {
+    margin-left: 0.5rem;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 200px;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 1rem;
+    text-align: right;
+}
+
+.dataTables_wrapper .dataTables_info {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}

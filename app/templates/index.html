@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+	<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/traffic-light.svg') }}">
+	<link rel="stylesheet" href="../static/css/style.css">
+	<title>Dashboard Penelitian</title>
+</head>
+
+<body>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<div class="logo">
+			<a href="{{ url_for('index') }}" class="brand">
+				<img src="{{ url_for('static', filename='img/traffic-light.svg') }}" alt="Logo">
+				JagaLantas
+			</a>
+		</div>
+		<ul class="side-menu">
+			<li><a href="{{ url_for('index') }}" class="active"><i class='bx  bxs-user-circle icon'></i> About</a></li>
+			<li><a href="{{ url_for('scraping_page') }}"><i class='bx  bxs-news icon'></i> Scraping</a></li>
+			<li><a href="{{ url_for('data_page') }}"><i class='bx  bxs-database icon'></i> Data</a></li>
+			<li><a href="{{ url_for('dashboard_page') }}"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+			<li><a href="{{ url_for('classification_page') }}"><i class='bx  bxs-network-chart icon'></i> Pola</a>
+			</li>
+
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+	<!-- NAVBAR -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu toggle-sidebar'></i>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<h1 class="title">About</h1>
+			<ul class="breadcrumbs">
+				<li><a href="{{ url_for('index') }}">Home</a></li>
+				<li class="divider">/</li>
+				<li><a href="{{ url_for('index') }}" class="active">About</a></li>
+			</ul>
+
+			<div class="info-data">
+				<div class="card">
+					<div class="head-scrap">
+						<div>
+							<h2>Tentang <i>Website</i></h2>
+						</div>
+						<div class="tentang-teks">
+							<p><i>Website</i> ini merupakan artifak dari skripsi mahasiswa Politeknik Statistika STIS
+								yang
+								berjudul "<b>Penerapan <i>Ensemble Learning</i> pada Deteksi Pola Kecelakaan Lalu Lintas
+									Menggunakan <i>Named Entity Recognition</i> Berbasis Berita <i>Online</i> (Studi
+									Kasus: Provinsi Jawa Tengah)</b>". <i>Website</i> ini menyediakan <i>dashboard</i>
+								yang menampilkan hasil penelitian tersebut, yaitu hasil ekstraksi informasi berita
+								<i>online</i> <b>Detikcom</b> menggunakan
+								model NER
+								<b>IndoBERT</b> serta klasifikasi untuk deteksi pola kecelakaan lalu lintas menggunakan
+								model <i><b>Random
+										Forest</b></i>. Selain itu, terdapat pula penggunan <i>surrogate model</i>
+								berbasis
+								<i><b>Decision Tree</b></i> untuk meningkatkan interpretabilitas dari model klasifikasi.
+							</p>
+							<p>Halaman yang disediakan oleh <i>website</i> ini:</p>
+							<ul class="tentang-list">
+								<li><b>Halaman <i>Scraping</i></b>, yang berisi tabel hasil otomatisasi <i>scraping</i>
+									berita
+									<i>online</i> setiap harinya.
+								</li>
+								<li><b>Halaman Data</b>, yang berisi tabel berita <i>online</i> serta tabel hasil
+									ekstraksi
+									informasi
+									berita <i>online.</i></li>
+								<li><b>Halaman <i>Dashboard</i></b>, yang berisi visualisasi hasil ekstraksi informasi
+									berita <i>online</i>.</li>
+								<li><b>Halaman Analisis</b>, yang berisi pohon keputusan untuk mendeteksi pola
+									kecelakaan lalu lintas di Jawa Tengah.</li>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- NAVBAR -->
+
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="../static/js/script.js"></script>
+</body>
+
+</html>
