@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/traffic-light.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/data.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.1.2/src/wordcloud2.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.3/src/wordcloud2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/wordcloud@1.2.3/bootstrap-responsive.min.css" rel="stylesheet">
+
+
+
+
+    <title>Dashboard Penelitian</title>
+</head>
+
+
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <div class="logo">
+            <a href="{{ url_for('index') }}" class="brand">
+                <img src="{{ url_for('static', filename='img/traffic-light.svg') }}" alt="Logo">
+                JagaLantas
+            </a>
+        </div>
+        <ul class="side-menu">
+            <li><a href="{{ url_for('index') }}"><i class='bx  bxs-user-circle icon'></i> About</a></li>
+            <li><a href="{{ url_for('scraping_page') }}"><i class='bx  bxs-news icon'></i> Scraping</a></li>
+            <li><a href="{{ url_for('data_page') }}"><i class='bx  bxs-database icon'></i> Data</a></li>
+            <li><a href="{{ url_for('dashboard_page') }}" class="active"><i class='bx bxs-dashboard icon'></i>
+                    Dashboard</a></li>
+            <li><a href="{{ url_for('classification_page') }}"><i class='bx  bxs-network-chart icon'></i> Pola</a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- NAVBAR -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu toggle-sidebar'></i>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <h1 class="title">Dashboard Hasil Ekstraksi Informasi Berita <i>Online</i></h1>
+            <ul class="breadcrumbs">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li class="divider">/</li>
+                <li><a href="{{ url_for('dashboard_page') }}" class="active">Dashboard</a></li>
+            </ul>
+
+            <form method="GET" class="horizontal-form">
+                <div class="form-item">
+                    <label for="start_date">Tanggal Mulai:</label>
+                    <input type="date" name="start_date"
+                        value="{{ start_date.strftime('%Y-%m-%d') if start_date else '' }}">
+                </div>
+
+                <div class="form-item">
+                    <label for="end_date">Tanggal Akhir:</label>
+                    <input type="date" name="end_date" value="{{ end_date.strftime('%Y-%m-%d') if end_date else '' }}">
+                </div>
+
+                <div class="form-item">
+                    <label for="lokasi">Lokasi:</label>
+                    <select name="lokasi">
+                        <option value="semua" {% if lokasi_terpilih=='semua' or not lokasi_terpilih %}selected{% endif
+                            %}>
+                            Semua
+                        </option>
+                        {% for loc in lokasi_list %}
+                        <option value="{{ loc }}" {% if loc==lokasi_terpilih %}selected{% endif %}>{{ loc.title() }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-item">
+                    <label>&nbsp;</label>
+                    <button type="submit">Tampilkan</button>
+                </div>
+            </form>
+
+            <div class="baris-1">
+                <div class="card-chart-overall">
+                    <div class="head-chart-overall">
+                        <div>
+                            <h2>Jumlah Berita</h2>
+                            <h3>{{ jumlah_kejadian }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-chart-overall">
+                    <div class="head-chart-overall">
+                        <div>
+                            <h2 style="font-size: 14px;">Jumlah Korban Luka yang Dilaporkan</h2>
+                            <h3>{{ jumlah_luka }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-chart-overall">
+                    <div class="head-chart-overall">
+                        <div>
+                            <h2 style="font-size: 14px;">Jumlah Korban Jiwa yang Dilaporkan</h2>
+                            <h3>{{ jumlah_kematian }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="baris-1">
+                <div class="card-chart">
+                    <div class="head-chart-map">
+                        <div>
+                            <h2>Persebaran Lokasi Laka Lantas</h2>
+                        </div>
+                        <div id="map"></div>
+                    </div>
+                </div>
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div class="title-switch">
+                            <div>
+                                <h2>Tren Berita Laka Lantas</h2>
+                            </div>
+                            <div class="periode-switch">
+                                <label><input type="radio" name="periode" value="tahun" checked> Tahunan</label>
+                                <label><input type="radio" name="periode" value="bulan"> Bulanan</label>
+                            </div>
+                        </div>
+                        <canvas id="chartDate"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="baris-1">
+                <div class="card-border">
+                    <div class="head-border">
+                        <div>
+                            <h2>Jumlah Berita Kecelakaan Lalu Lintas</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="baris-1">
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div>
+                            <h2>Menurut Hari Kejadian</h2>
+                        </div>
+                        <canvas id="chartDay"></canvas>
+                    </div>
+                </div>
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div>
+                            <h2>Menurut Waktu Kejadian</h2>
+                        </div>
+                        <canvas id="chartTime"></canvas>
+                    </div>
+                </div>
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div class="head-chart-cause">
+                            <div>
+                                <h2>Menurut Faktor Penyebab</h2>
+                            </div>
+                            <i id="showCauseWordcloudIcon" class='bx bx-arrow-out-up-right-square'
+                                title="Lihat Word Cloud Faktor Penyebab"></i>
+                        </div>
+                        <canvas id="chartCause"></canvas>
+                    </div>
+                </div>
+                <div id="wordcloudCauseModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Word Cloud Faktor Penyebab</h2>
+                            <span class="close-button" id="closeWordcloudModalBtn">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <p id="wordcloudLoadingText" style="display:none;">Memuat word cloud, mohon tunggu...</p>
+                            <img id="wordcloudCauseImage" src="" alt="Word Cloud Faktor Penyebab"
+                                style="display:none;" />
+                            <p id="wordcloudErrorText" style="display:none;"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="baris-1">
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div>
+                            <h2>Menurut Jenis Jalan</h2>
+                        </div>
+                        <canvas id="chartRoad"></canvas>
+                    </div>
+                </div>
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div>
+                            <h2>Menurut Jenis Kendaraan</h2>
+                        </div>
+                        <canvas id="chartVehicle"></canvas>
+                    </div>
+                </div>
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div>
+                            <h2>Menurut Merek Kendaraan</h2>
+                        </div>
+                        <canvas id="chartMerk"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="baris-1">
+                <div class="card-border">
+                    <div class="head-border">
+                        <div>
+                            <h2>Jumlah Korban Kecelakaan Lalu Lintas yang Dilaporkan</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="baris-1">
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div>
+                            <h2>Menurut Kelompok Usia</h2>
+                        </div>
+                        <canvas id="chartAge"></canvas>
+                    </div>
+                </div>
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div class="title-switch">
+                            <div>
+                                <h2 style="font-size: 14px;">Tren Korban Luka</h2>
+                            </div>
+                            <div class="periode-switch">
+                                <label style="font-size: 12px;"><input type="radio" name="periode_injury" value="tahun"
+                                        checked> Tahunan</label>
+                                <label style="font-size: 12px;"><input type="radio" name="periode_injury" value="bulan">
+                                    Bulanan</label>
+                            </div>
+                        </div>
+                        <canvas id="chartInjury"></canvas>
+                    </div>
+                </div>
+                <div class="card-chart">
+                    <div class="head-chart">
+                        <div class="title-switch">
+                            <div>
+                                <h2 style="font-size: 14px;">Tren Korban Jiwa</h2>
+                            </div>
+                            <div class="periode-switch">
+                                <label style="font-size: 12px;"><input type="radio" name="periode_death" value="tahun"
+                                        checked> Tahunan</label>
+                                <label style="font-size: 12px;"><input type="radio" name="periode_death" value="bulan">
+                                    Bulanan</label>
+                            </div>
+                        </div>
+                        <canvas id="chartDeath"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- NAVBAR -->
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="../static/js/script.js"></script>
+
+    <script type="text/javascript">
+        const chartLabelsDay = JSON.parse('{{ labels_day     | tojson | safe }}');
+        const chartDataDay = JSON.parse('{{ data_day       | tojson | safe }}');
+        const chartLabelsVehicle = JSON.parse('{{ labels_vehicle | tojson | safe }}');
+        const chartDataVehicle = JSON.parse('{{ data_vehicle   | tojson | safe }}');
+        const chartLabelsMerk = JSON.parse('{{ labels_merk    | tojson | safe }}');
+        const chartDataMerk = JSON.parse('{{ data_merk      | tojson | safe }}');
+        const chartLabelsAge = JSON.parse('{{ labels_age     | tojson | safe }}');
+        const chartDataAge = JSON.parse('{{ data_age       | tojson | safe }}');
+        const chartLabelsRoad = JSON.parse('{{ labels_road    | tojson | safe }}');
+        const chartDataRoad = JSON.parse('{{ data_road      | tojson | safe }}');
+        const chartLabelsTime = JSON.parse('{{ labels_time    | tojson | safe }}');
+        const chartDataTime = JSON.parse('{{ data_time      | tojson | safe }}');
+        const chartLabelsCause = JSON.parse('{{ labels_cause   | tojson | safe }}');
+        const chartDataCause = JSON.parse('{{ data_cause     | tojson | safe }}');
+        const geojsonData = JSON.parse('{{ geojson_data   | safe }}');
+    </script>
+
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+/* TABEL EKSTRAKSI */
+#ClassificationTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#ClassificationTable th,
+#ClassificationTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: top;
+}
+
+#ClassificationTable th {
+    background-color: var(--blue);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#ClassificationTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#ClassificationTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+#ClassificationTable td:first-child,
+#ClassificationTable th:first-child {
+    text-align: center;
+    width: 50px;
+}
+
+.head-download {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.btn-download-classification {
+    background: var(--blue-dark);
+    /* Ganti dengan warna yang lebih gelap */
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    padding: 6px 12px;
+
+    border-radius: 5px;
+
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    outline: none;
+    /* Menghapus outline saat fokus */
+    cursor: pointer;
+    /* Mengubah kursor saat hover */
+}
+
+.btn-download-classification:hover {
+    background: var(--blue);
+    color: var(--light);
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Menambahkan bayangan */
+}
+
+.btn-download-classification:focus {
+    outline: none;
+}
+
+.tree-image {
+    width: 100%;
+    /* Hapus height tetap kalau ada */
+}
+
+.tree-image img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+    border-radius: 10px;
+    object-fit: contain;
+    /* Ganti dari 'cover' ke 'contain' jika ingin gambar tidak terpotong */
+}
+
+.tree-notes {
+    list-style-type: disc;
+    padding-left: 20px;
+}
