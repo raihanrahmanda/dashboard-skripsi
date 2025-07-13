@@ -1,12 +1,12 @@
-from app.utils.scraper import detikcom_scraping  
-from app.utils.pre_processing import load_and_clean_data
-from app.utils.klasifikasi_berita_relevan import predict_sentiment_from_file
-from app.utils.pemeriksaan_kesamaan_teks import update_relevant_news_and_filter
-from app.utils.prediksi_ner import prediksi_ner, extract_all_entities, process_dates, normalize_location
-from app.utils.pembentukan_tabel_visualisasi import entitas_day, entitas_time, entitas_age, entitas_cause, entitas_death, entitas_injury, entitas_loc, entitas_merk, entitas_road, entitas_vehicle
-from app.utils.pembentukan_dataset_klasifikasi import grouping_day, grouping_cause, grouping_vehicle, grouping_death, grouping_time, grouping_driver_age, grouping_road, finalisasi_dataset
-from app.utils.klasifikasi_kecelakaan_lalu_lintas import preprocessing_klasifikasi, prediksi_laka_lantas, visualisasi_surrogate_tree
-from app.utils.word_classification import BertForWordClassification
+# from app.utils.scraper import detikcom_scraping  
+# from app.utils.pre_processing import load_and_clean_data
+# from app.utils.klasifikasi_berita_relevan import predict_sentiment_from_file
+# from app.utils.pemeriksaan_kesamaan_teks import update_relevant_news_and_filter
+# from app.utils.prediksi_ner import prediksi_ner, extract_all_entities, process_dates, normalize_location
+# from app.utils.pembentukan_tabel_visualisasi import entitas_day, entitas_time, entitas_age, entitas_cause, entitas_death, entitas_injury, entitas_loc, entitas_merk, entitas_road, entitas_vehicle
+# from app.utils.pembentukan_dataset_klasifikasi import grouping_day, grouping_cause, grouping_vehicle, grouping_death, grouping_time, grouping_driver_age, grouping_road, finalisasi_dataset
+# from app.utils.klasifikasi_kecelakaan_lalu_lintas import preprocessing_klasifikasi, prediksi_laka_lantas, visualisasi_surrogate_tree
+# from app.utils.word_classification import BertForWordClassification
 
 from flask import Flask, render_template, request, jsonify, send_file
 import pandas as pd
