@@ -24,7 +24,7 @@ from wordcloud import WordCloud
 import matplotlib
 matplotlib.use('Agg') # Penting untuk backend matplotlib tanpa GUI
 import matplotlib.pyplot as plt
-# import requests
+import requests
 
 import gdown
 
