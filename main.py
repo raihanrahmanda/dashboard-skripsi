@@ -655,14 +655,6 @@ def load_combine_news():
 
         df_news_combined = pd.concat([df_news, df_news_new], ignore_index=True)
         df_news_combined = df_news_combined.drop_duplicates(subset=['news_id'], keep='first')
-        # df_news_combined.to_csv('data/dataset_berita_lengkap_terbaru.csv', index=False, encoding='utf-8-sig')
-
-        # file_id_df_news_combined = '1qye8dVYe6e5e7xu1xLj2YGrmsZKHOe7a'  # Ganti dengan file ID kamu
-        # url_df_news_combined = f'https://drive.google.com/uc?export=download&id={file_id_df_news_combined}'
-        # response_df_news_combined = requests.get(url_df_news_combined)
-        # df_news_combined = pd.read_csv(io.StringIO(response_df_news_combined.text), encoding='utf-8-sig')
-        # df_news_combined = df_news_combined.replace({np.nan: None})
-        # data = df_news_combined.to_dict(orient='records')
         data = df_news_combined.fillna('').to_dict(orient='records')
         return jsonify(data)
     except Exception as e:
