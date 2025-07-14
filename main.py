@@ -16,7 +16,7 @@ import traceback
 from datetime import datetime
 import os
 import json
-# from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 
 import io # Untuk menangani gambar dalam memori
 import base64 # Untuk encode gambar ke base64
@@ -75,7 +75,7 @@ def dashboard_page():
     # --------------------------------- PEMROSESEN ENTITAS KENDARAAN ---------------------------------
     # Entitas Jenis Kendaraan 
     # df_vehicle = pd.read_csv('data/tabel_entitas_vehicle.csv')
-    file_id_df_vehicle = '1HnI-nKfqtObiVQE7L7lrKNo9UQu08R6y'  # Ganti dengan file ID kamu
+    file_id_df_vehicle = '14c_MceTk8eCzDTI51rKTt71zOTqpAVv4'  # Ganti dengan file ID kamu
     url_df_vehicle = f'https://drive.google.com/uc?export=download&id={file_id_df_vehicle}'
     response_df_vehicle = requests.get(url_df_vehicle)
     df_vehicle = pd.read_csv(io.StringIO(response_df_vehicle.text), encoding='utf-8-sig')
@@ -101,7 +101,11 @@ def dashboard_page():
 
     # --------------------------------- PEMROSESEN ENTITAS MERK KENDARAAN ---------------------------------
     # Entitas Jenis Kendaraan 
-    df_merk = pd.read_csv('data/tabel_entitas_merk.csv')
+    # df_merk = pd.read_csv('data/tabel_entitas_merk.csv')
+    file_id_df_merk = '1ioai7ykYF03Fygob0n33nYEMKItNUhTV'  # Ganti dengan file ID kamu
+    url_df_merk = f'https://drive.google.com/uc?export=download&id={file_id_df_merk}'
+    response_df_merk = requests.get(url_df_merk)
+    df_merk = pd.read_csv(io.StringIO(response_df_merk.text), encoding='utf-8-sig')
     df_merk['DATE_STANDARDIZED'] = pd.to_datetime(df_merk['DATE_STANDARDIZED'], errors='coerce')
     df_merk = df_merk[df_merk['MERK'] != 'Tidak diketahui']
 
@@ -130,7 +134,11 @@ def dashboard_page():
 
     # ---------------------------------- PEMROSESEN ENTITAS HARI KEJADIAN ---------------------------------
     # Entitas Hari Kejadian
-    df_day = pd.read_csv('data/tabel_entitas_day.csv')
+    # df_day = pd.read_csv('data/tabel_entitas_day.csv')
+    file_id_df_day = '1PRtJNgPbrp8QsRwGgVgDIIiaeMR3O8jO'  # Ganti dengan file ID kamu
+    url_df_day = f'https://drive.google.com/uc?export=download&id={file_id_df_day}'
+    response_df_day = requests.get(url_df_day)
+    df_day = pd.read_csv(io.StringIO(response_df_day.text), encoding='utf-8-sig')
     df_day['DATE_STANDARDIZED'] = pd.to_datetime(df_day['DATE_STANDARDIZED'], errors='coerce')
 
     # Standarisasi kolom lokasi
@@ -154,7 +162,11 @@ def dashboard_page():
 
     # --------------------------------- PEMROSESEN ENTITAS UMUR ---------------------------------
     # Entitas Umur
-    df_age = pd.read_csv('data/tabel_entitas_age.csv')
+    # df_age = pd.read_csv('data/tabel_entitas_age.csv')
+    file_id_df_age = '1hRCPZJrY-F58bgpq_WoU-Mgram4VBONK'  # Ganti dengan file ID kamu
+    url_df_age = f'https://drive.google.com/uc?export=download&id={file_id_df_age}'
+    response_df_age = requests.get(url_df_age)
+    df_age = pd.read_csv(io.StringIO(response_df_age.text), encoding='utf-8-sig')
     df_age['DATE_STANDARDIZED'] = pd.to_datetime(df_age['DATE_STANDARDIZED'], errors='coerce')
     df_age = df_age[df_age['AGE_CATEGORY'] != 'Tidak diketahui']
 
@@ -177,7 +189,11 @@ def dashboard_page():
 
     # --------------------------------- PEMROSESEN ENTITAS ROAD ---------------------------------
     # Entitas Road
-    df_road = pd.read_csv('data/tabel_entitas_road.csv')
+    # df_road = pd.read_csv('data/tabel_entitas_road.csv')
+    file_id_df_road = '1OhnmkIPjgVw54jnJmijOFcaGNiDMnEaN'  # Ganti dengan file ID kamu
+    url_df_road = f'https://drive.google.com/uc?export=download&id={file_id_df_road}'
+    response_df_road = requests.get(url_df_road)
+    df_road = pd.read_csv(io.StringIO(response_df_road.text), encoding='utf-8-sig')
     df_road['DATE_STANDARDIZED'] = pd.to_datetime(df_road['DATE_STANDARDIZED'], errors='coerce')
     df_road = df_road[df_road['ROAD_CATEGORY'] != 'Tidak diketahui']
 
@@ -200,7 +216,11 @@ def dashboard_page():
 
     # --------------------------------- PEMROSESEN ENTITAS TIME ---------------------------------
     # Entitas Time
-    df_time = pd.read_csv('data/tabel_entitas_time.csv')
+    # df_time = pd.read_csv('data/tabel_entitas_time.csv')
+    file_id_df_time = '1SMJzG1kfiZRBo7lnTIitrXR6nL_GIZSY'  # Ganti dengan file ID kamu
+    url_df_time = f'https://drive.google.com/uc?export=download&id={file_id_df_time}'
+    response_df_time = requests.get(url_df_time)
+    df_time = pd.read_csv(io.StringIO(response_df_time.text), encoding='utf-8-sig')
     df_time['DATE_STANDARDIZED'] = pd.to_datetime(df_time['DATE_STANDARDIZED'], errors='coerce')
     df_time = df_time[df_time['TIME_CATEGORY'] != 'Tidak diketahui']
 
@@ -223,7 +243,11 @@ def dashboard_page():
 
     # --------------------------------- PEMROSESEN ENTITAS CAUSE ---------------------------------
     # Entitas Cause
-    df_cause = pd.read_csv('data/tabel_entitas_cause.csv')
+    # df_cause = pd.read_csv('data/tabel_entitas_cause.csv')
+    file_id_df_cause = '1qAxMIeLcH9zL70JShSsvHY_pBOf3eQpQ'  # Ganti dengan file ID kamu
+    url_df_cause = f'https://drive.google.com/uc?export=download&id={file_id_df_cause}'
+    response_df_cause = requests.get(url_df_cause)
+    df_cause = pd.read_csv(io.StringIO(response_df_cause.text), encoding='utf-8-sig')
     df_cause['DATE_STANDARDIZED'] = pd.to_datetime(df_cause['DATE_STANDARDIZED'], errors='coerce')
     df_cause = df_cause[df_cause['CAUSE_CATEGORY'] != 'Lainnya']
 
@@ -254,7 +278,11 @@ def dashboard_page():
         return lokasi
 
     # === CSV lokasi untuk peta ===
-    df_loc = pd.read_csv('data/tabel_entitas_loc.csv')
+    # df_loc = pd.read_csv('data/tabel_entitas_loc.csv')
+    file_id_df_loc = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
+    url_df_loc = f'https://drive.google.com/uc?export=download&id={file_id_df_loc}'
+    response_df_loc = requests.get(url_df_loc)
+    df_loc = pd.read_csv(io.StringIO(response_df_loc.text), encoding='utf-8-sig')
     df_loc['DATE_STANDARDIZED'] = pd.to_datetime(df_loc['DATE_STANDARDIZED'], errors='coerce')
     df_loc['LOC'] = df_loc['LOC'].astype(str).apply(normalize_lokasi)
 
@@ -270,8 +298,17 @@ def dashboard_page():
     jumlah_kejadian = location_counts['jumlah'].sum()
 
     # === Load GeoJSON dan tambahkan data jumlah ===
-    with open('data/batas_kabkota_jateng.geojson', encoding='utf-8') as f:
-        geojson_data = json.load(f)
+    # with open('data/batas_kabkota_jateng.geojson', encoding='utf-8') as f:
+    #     geojson_data = json.load(f)
+    
+    file_id_geo = '1ChrFijx7onjTqlNk-rbRXm6v8zvb8SRc'
+    url_geo = f'https://drive.google.com/uc?export=download&id={file_id_geo}'
+
+    response = requests.get(url_geo)
+    if response.status_code == 200 and 'application/json' in response.headers.get('Content-Type', ''):
+        geojson_data = response.json()
+    else:
+        raise Exception("Gagal mengunduh atau file bukan GeoJSON.")
 
     for feature in geojson_data['features']:
         nama_asli = feature['properties']['WADMKK'].strip()
@@ -289,8 +326,11 @@ def dashboard_page():
         feature['properties']['jumlah'] = jumlah
     
     # ---------------------------------------- PEMROSESEN ENTITAS INJURY ---------------------------------
-    df_injury = pd.read_csv('data/tabel_entitas_injury.csv')
-
+    # df_injury = pd.read_csv('data/tabel_entitas_injury.csv')
+    file_id_df_injury = '1CPoPNFhkNQgihWhzp2CZOtpKsonKQEV7'  # Ganti dengan file ID kamu
+    url_df_injury = f'https://drive.google.com/uc?export=download&id={file_id_df_injury}'
+    response_df_injury = requests.get(url_df_injury)
+    df_injury = pd.read_csv(io.StringIO(response_df_injury.text), encoding='utf-8-sig')
     # Parsing tanggal
     df_injury['DATE_STANDARDIZED'] = pd.to_datetime(df_injury['DATE_STANDARDIZED'], errors='coerce')
     df_injury = df_injury.dropna(subset=['DATE_STANDARDIZED'])
@@ -321,7 +361,11 @@ def dashboard_page():
     jumlah_luka = counts_injury['jumlah'].sum() if not counts_injury.empty else 0
 
     # ---------------------------------------- PEMROSESEN ENTITAS DEATH ---------------------------------
-    df_death = pd.read_csv('data/tabel_entitas_death.csv')
+    # df_death = pd.read_csv('data/tabel_entitas_death.csv')
+    file_id_df_death = '1tvelEKu3mS2LV7YFOzxqv7S0-by1QB0l'  # Ganti dengan file ID kamu
+    url_df_death = f'https://drive.google.com/uc?export=download&id={file_id_df_death}'
+    response_df_death = requests.get(url_df_death)
+    df_death = pd.read_csv(io.StringIO(response_df_death.text), encoding='utf-8-sig')
 
     # Parsing tanggal
     df_death['DATE_STANDARDIZED'] = pd.to_datetime(df_death['DATE_STANDARDIZED'], errors='coerce')
@@ -402,7 +446,11 @@ def get_chart_date():
     end_date = request.args.get('end_date')
     lokasi = request.args.get('lokasi')
 
-    df_date = pd.read_csv('data/tabel_entitas_loc.csv')
+    # df_date = pd.read_csv('data/tabel_entitas_loc.csv')
+    file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
+    url_df_date = f'https://drive.google.com/uc?export=download&id={file_id_df_date}'
+    response_df_date = requests.get(url_df_date)
+    df_date = pd.read_csv(io.StringIO(response_df_date.text), encoding='utf-8-sig')
     df_date['DATE_STANDARDIZED'] = pd.to_datetime(df_date['DATE_STANDARDIZED'], errors='coerce')
     df_date = df_date.dropna(subset=['DATE_STANDARDIZED'])
     df_date['month_year'] = df_date['DATE_STANDARDIZED'].dt.to_period('M').astype(str)
@@ -435,7 +483,11 @@ def get_chart_injury():
     end_date = request.args.get('end_date')
     lokasi = request.args.get('lokasi')
 
-    df_injury = pd.read_csv('data/tabel_entitas_injury.csv')
+    # df_injury = pd.read_csv('data/tabel_entitas_injury.csv')
+    file_id_df_injury = '1CPoPNFhkNQgihWhzp2CZOtpKsonKQEV7'  # Ganti dengan file ID kamu
+    url_df_injury = f'https://drive.google.com/uc?export=download&id={file_id_df_injury}'
+    response_df_injury = requests.get(url_df_injury)
+    df_injury = pd.read_csv(io.StringIO(response_df_injury.text), encoding='utf-8-sig')
 
     # Parsing tanggal
     df_injury['DATE_STANDARDIZED'] = pd.to_datetime(df_injury['DATE_STANDARDIZED'], errors='coerce')
@@ -483,7 +535,11 @@ def get_chart_death():
     end_date = request.args.get('end_date')
     lokasi = request.args.get('lokasi')
 
-    df_death = pd.read_csv('data/tabel_entitas_death.csv')
+    # df_death = pd.read_csv('data/tabel_entitas_death.csv')
+    file_id_df_death = '1tvelEKu3mS2LV7YFOzxqv7S0-by1QB0l'  # Ganti dengan file ID kamu
+    url_df_death = f'https://drive.google.com/uc?export=download&id={file_id_df_death}'
+    response_df_death = requests.get(url_df_death)
+    df_death = pd.read_csv(io.StringIO(response_df_death.text), encoding='utf-8-sig')
 
     # Parsing tanggal
     df_death['DATE_STANDARDIZED'] = pd.to_datetime(df_death['DATE_STANDARDIZED'], errors='coerce')
@@ -531,7 +587,11 @@ def generate_wordcloud_cause_route(): # Ubah nama fungsi agar unik
     end_date = pd.to_datetime(request.args.get('end_date')) if request.args.get('end_date') else None
     lokasi = request.args.get('lokasi').strip().lower() if request.args.get('lokasi') else None
 
-    df_cause = pd.read_csv('data/tabel_entitas_cause.csv')
+    # df_cause = pd.read_csv('data/tabel_entitas_cause.csv')
+    file_id_df_cause = '1qAxMIeLcH9zL70JShSsvHY_pBOf3eQpQ'  # Ganti dengan file ID kamu
+    url_df_cause = f'https://drive.google.com/uc?export=download&id={file_id_df_cause}'
+    response_df_cause = requests.get(url_df_cause)
+    df_cause = pd.read_csv(io.StringIO(response_df_cause.text), encoding='utf-8-sig')
     df_cause['DATE_STANDARDIZED'] = pd.to_datetime(df_cause['DATE_STANDARDIZED'], errors='coerce')
     # Jangan filter 'Lainnya' di sini jika ingin tetap ada kemungkinan muncul di wordcloud
     df_cause = df_cause[df_cause['CAUSE_CATEGORY'] != 'Lainnya'] 
