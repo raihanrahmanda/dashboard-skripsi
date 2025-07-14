@@ -27,6 +27,7 @@ import matplotlib.pyplot as plt
 import requests
 
 import gdown
+from functools import lru_cache
 
 app = Flask(
     __name__,
@@ -63,6 +64,16 @@ def download_classification_table():
     
     return send_file(file_path, as_attachment=True)
 
+@lru_cache(maxsize=16)
+def load_csv_from_drive(file_id):
+    """Mengunduh dan cache CSV dari Google Drive berdasarkan file ID."""
+    url = f'https://drive.google.com/uc?export=download&id={file_id}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        return pd.read_csv(io.StringIO(response.text), encoding='utf-8-sig')
+    else:
+        raise Exception(f"Gagal mengunduh file ID {file_id}")
+
 @app.route('/dashboard')
 def dashboard_page():
     # Ambil parameter filter dari query string
@@ -71,14 +82,54 @@ def dashboard_page():
     lokasi = request.args.get('lokasi')
     periode_laka = request.args.get('periode', 'bulan')
 
-
+    # ---------------------------- MENDEFINISIKAN DATAFRAME ----------------------------------------
+    # VEHICLE
+    file_id_df_vehicle = '14c_MceTk8eCzDTI51rKTt71zOTqpAVv4'
+    df_vehicle = load_csv_from_drive(file_id_df_vehicle)
+    
+    # MERK
+    file_id_df_merk = '1ioai7ykYF03Fygob0n33nYEMKItNUhTV'
+    df_merk = load_csv_from_drive(file_id_df_merk)
+    
+    # DAY
+    file_id_df_day = '1PRtJNgPbrp8QsRwGgVgDIIiaeMR3O8jO'
+    df_day = load_csv_from_drive(file_id_df_day)
+    
+    # AGE
+    file_id_df_age = '1hRCPZJrY-F58bgpq_WoU-Mgram4VBONK'
+    df_age = load_csv_from_drive(file_id_df_age)
+    
+    # ROAD
+    file_id_df_road = '1OhnmkIPjgVw54jnJmijOFcaGNiDMnEaN'
+    df_road = load_csv_from_drive(file_id_df_road)
+    
+    # TIME
+    file_id_df_time = '1SMJzG1kfiZRBo7lnTIitrXR6nL_GIZSY'
+    df_time = load_csv_from_drive(file_id_df_time)
+    
+    # CAUSE
+    file_id_df_cause = '1qAxMIeLcH9zL70JShSsvHY_pBOf3eQpQ'
+    df_cause = load_csv_from_drive(file_id_df_cause)
+    
+    # LOC
+    file_id_df_loc = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'
+    df_loc = load_csv_from_drive(file_id_df_loc)
+    
+    # INJURY
+    file_id_df_injury = '1CPoPNFhkNQgihWhzp2CZOtpKsonKQEV7'
+    df_injury = load_csv_from_drive(file_id_df_injury)
+    
+    # DEATH
+    file_id_df_death = '1tvelEKu3mS2LV7YFOzxqv7S0-by1QB0l'
+    df_death = load_csv_from_drive(file_id_df_death)
+    
     # --------------------------------- PEMROSESEN ENTITAS KENDARAAN ---------------------------------
     # Entitas Jenis Kendaraan 
     # df_vehicle = pd.read_csv('data/tabel_entitas_vehicle.csv')
-    file_id_df_vehicle = '14c_MceTk8eCzDTI51rKTt71zOTqpAVv4'  # Ganti dengan file ID kamu
-    url_df_vehicle = f'https://drive.google.com/uc?export=download&id={file_id_df_vehicle}'
-    response_df_vehicle = requests.get(url_df_vehicle)
-    df_vehicle = pd.read_csv(io.StringIO(response_df_vehicle.text), encoding='utf-8-sig')
+    # file_id_df_vehicle = '14c_MceTk8eCzDTI51rKTt71zOTqpAVv4'  # Ganti dengan file ID kamu
+    # url_df_vehicle = f'https://drive.google.com/uc?export=download&id={file_id_df_vehicle}'
+    # response_df_vehicle = requests.get(url_df_vehicle)
+    # df_vehicle = pd.read_csv(io.StringIO(response_df_vehicle.text), encoding='utf-8-sig')
     df_vehicle['DATE_STANDARDIZED'] = pd.to_datetime(df_vehicle['DATE_STANDARDIZED'], errors='coerce')
     df_vehicle = df_vehicle[df_vehicle['VEHICLE'] != 'Tidak diketahui']
 
@@ -102,10 +153,10 @@ def dashboard_page():
     # --------------------------------- PEMROSESEN ENTITAS MERK KENDARAAN ---------------------------------
     # Entitas Jenis Kendaraan 
     # df_merk = pd.read_csv('data/tabel_entitas_merk.csv')
-    file_id_df_merk = '1ioai7ykYF03Fygob0n33nYEMKItNUhTV'  # Ganti dengan file ID kamu
-    url_df_merk = f'https://drive.google.com/uc?export=download&id={file_id_df_merk}'
-    response_df_merk = requests.get(url_df_merk)
-    df_merk = pd.read_csv(io.StringIO(response_df_merk.text), encoding='utf-8-sig')
+    # file_id_df_merk = '1ioai7ykYF03Fygob0n33nYEMKItNUhTV'  # Ganti dengan file ID kamu
+    # url_df_merk = f'https://drive.google.com/uc?export=download&id={file_id_df_merk}'
+    # response_df_merk = requests.get(url_df_merk)
+    # df_merk = pd.read_csv(io.StringIO(response_df_merk.text), encoding='utf-8-sig')
     df_merk['DATE_STANDARDIZED'] = pd.to_datetime(df_merk['DATE_STANDARDIZED'], errors='coerce')
     df_merk = df_merk[df_merk['MERK'] != 'Tidak diketahui']
 
@@ -135,10 +186,10 @@ def dashboard_page():
     # ---------------------------------- PEMROSESEN ENTITAS HARI KEJADIAN ---------------------------------
     # Entitas Hari Kejadian
     # df_day = pd.read_csv('data/tabel_entitas_day.csv')
-    file_id_df_day = '1PRtJNgPbrp8QsRwGgVgDIIiaeMR3O8jO'  # Ganti dengan file ID kamu
-    url_df_day = f'https://drive.google.com/uc?export=download&id={file_id_df_day}'
-    response_df_day = requests.get(url_df_day)
-    df_day = pd.read_csv(io.StringIO(response_df_day.text), encoding='utf-8-sig')
+    # file_id_df_day = '1PRtJNgPbrp8QsRwGgVgDIIiaeMR3O8jO'  # Ganti dengan file ID kamu
+    # url_df_day = f'https://drive.google.com/uc?export=download&id={file_id_df_day}'
+    # response_df_day = requests.get(url_df_day)
+    # df_day = pd.read_csv(io.StringIO(response_df_day.text), encoding='utf-8-sig')
     df_day['DATE_STANDARDIZED'] = pd.to_datetime(df_day['DATE_STANDARDIZED'], errors='coerce')
 
     # Standarisasi kolom lokasi
@@ -163,10 +214,10 @@ def dashboard_page():
     # --------------------------------- PEMROSESEN ENTITAS UMUR ---------------------------------
     # Entitas Umur
     # df_age = pd.read_csv('data/tabel_entitas_age.csv')
-    file_id_df_age = '1hRCPZJrY-F58bgpq_WoU-Mgram4VBONK'  # Ganti dengan file ID kamu
-    url_df_age = f'https://drive.google.com/uc?export=download&id={file_id_df_age}'
-    response_df_age = requests.get(url_df_age)
-    df_age = pd.read_csv(io.StringIO(response_df_age.text), encoding='utf-8-sig')
+    # file_id_df_age = '1hRCPZJrY-F58bgpq_WoU-Mgram4VBONK'  # Ganti dengan file ID kamu
+    # url_df_age = f'https://drive.google.com/uc?export=download&id={file_id_df_age}'
+    # response_df_age = requests.get(url_df_age)
+    # df_age = pd.read_csv(io.StringIO(response_df_age.text), encoding='utf-8-sig')
     df_age['DATE_STANDARDIZED'] = pd.to_datetime(df_age['DATE_STANDARDIZED'], errors='coerce')
     df_age = df_age[df_age['AGE_CATEGORY'] != 'Tidak diketahui']
 
@@ -190,10 +241,10 @@ def dashboard_page():
     # --------------------------------- PEMROSESEN ENTITAS ROAD ---------------------------------
     # Entitas Road
     # df_road = pd.read_csv('data/tabel_entitas_road.csv')
-    file_id_df_road = '1OhnmkIPjgVw54jnJmijOFcaGNiDMnEaN'  # Ganti dengan file ID kamu
-    url_df_road = f'https://drive.google.com/uc?export=download&id={file_id_df_road}'
-    response_df_road = requests.get(url_df_road)
-    df_road = pd.read_csv(io.StringIO(response_df_road.text), encoding='utf-8-sig')
+    # file_id_df_road = '1OhnmkIPjgVw54jnJmijOFcaGNiDMnEaN'  # Ganti dengan file ID kamu
+    # url_df_road = f'https://drive.google.com/uc?export=download&id={file_id_df_road}'
+    # response_df_road = requests.get(url_df_road)
+    # df_road = pd.read_csv(io.StringIO(response_df_road.text), encoding='utf-8-sig')
     df_road['DATE_STANDARDIZED'] = pd.to_datetime(df_road['DATE_STANDARDIZED'], errors='coerce')
     df_road = df_road[df_road['ROAD_CATEGORY'] != 'Tidak diketahui']
 
@@ -217,10 +268,10 @@ def dashboard_page():
     # --------------------------------- PEMROSESEN ENTITAS TIME ---------------------------------
     # Entitas Time
     # df_time = pd.read_csv('data/tabel_entitas_time.csv')
-    file_id_df_time = '1SMJzG1kfiZRBo7lnTIitrXR6nL_GIZSY'  # Ganti dengan file ID kamu
-    url_df_time = f'https://drive.google.com/uc?export=download&id={file_id_df_time}'
-    response_df_time = requests.get(url_df_time)
-    df_time = pd.read_csv(io.StringIO(response_df_time.text), encoding='utf-8-sig')
+    # file_id_df_time = '1SMJzG1kfiZRBo7lnTIitrXR6nL_GIZSY'  # Ganti dengan file ID kamu
+    # url_df_time = f'https://drive.google.com/uc?export=download&id={file_id_df_time}'
+    # response_df_time = requests.get(url_df_time)
+    # df_time = pd.read_csv(io.StringIO(response_df_time.text), encoding='utf-8-sig')
     df_time['DATE_STANDARDIZED'] = pd.to_datetime(df_time['DATE_STANDARDIZED'], errors='coerce')
     df_time = df_time[df_time['TIME_CATEGORY'] != 'Tidak diketahui']
 
@@ -244,10 +295,10 @@ def dashboard_page():
     # --------------------------------- PEMROSESEN ENTITAS CAUSE ---------------------------------
     # Entitas Cause
     # df_cause = pd.read_csv('data/tabel_entitas_cause.csv')
-    file_id_df_cause = '1qAxMIeLcH9zL70JShSsvHY_pBOf3eQpQ'  # Ganti dengan file ID kamu
-    url_df_cause = f'https://drive.google.com/uc?export=download&id={file_id_df_cause}'
-    response_df_cause = requests.get(url_df_cause)
-    df_cause = pd.read_csv(io.StringIO(response_df_cause.text), encoding='utf-8-sig')
+    # file_id_df_cause = '1qAxMIeLcH9zL70JShSsvHY_pBOf3eQpQ'  # Ganti dengan file ID kamu
+    # url_df_cause = f'https://drive.google.com/uc?export=download&id={file_id_df_cause}'
+    # response_df_cause = requests.get(url_df_cause)
+    # df_cause = pd.read_csv(io.StringIO(response_df_cause.text), encoding='utf-8-sig')
     df_cause['DATE_STANDARDIZED'] = pd.to_datetime(df_cause['DATE_STANDARDIZED'], errors='coerce')
     df_cause = df_cause[df_cause['CAUSE_CATEGORY'] != 'Lainnya']
 
@@ -279,10 +330,10 @@ def dashboard_page():
 
     # === CSV lokasi untuk peta ===
     # df_loc = pd.read_csv('data/tabel_entitas_loc.csv')
-    file_id_df_loc = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
-    url_df_loc = f'https://drive.google.com/uc?export=download&id={file_id_df_loc}'
-    response_df_loc = requests.get(url_df_loc)
-    df_loc = pd.read_csv(io.StringIO(response_df_loc.text), encoding='utf-8-sig')
+    # file_id_df_loc = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
+    # url_df_loc = f'https://drive.google.com/uc?export=download&id={file_id_df_loc}'
+    # response_df_loc = requests.get(url_df_loc)
+    # df_loc = pd.read_csv(io.StringIO(response_df_loc.text), encoding='utf-8-sig')
     df_loc['DATE_STANDARDIZED'] = pd.to_datetime(df_loc['DATE_STANDARDIZED'], errors='coerce')
     df_loc['LOC'] = df_loc['LOC'].astype(str).apply(normalize_lokasi)
 
@@ -342,10 +393,10 @@ def dashboard_page():
     
     # ---------------------------------------- PEMROSESEN ENTITAS INJURY ---------------------------------
     # df_injury = pd.read_csv('data/tabel_entitas_injury.csv')
-    file_id_df_injury = '1CPoPNFhkNQgihWhzp2CZOtpKsonKQEV7'  # Ganti dengan file ID kamu
-    url_df_injury = f'https://drive.google.com/uc?export=download&id={file_id_df_injury}'
-    response_df_injury = requests.get(url_df_injury)
-    df_injury = pd.read_csv(io.StringIO(response_df_injury.text), encoding='utf-8-sig')
+    # file_id_df_injury = '1CPoPNFhkNQgihWhzp2CZOtpKsonKQEV7'  # Ganti dengan file ID kamu
+    # url_df_injury = f'https://drive.google.com/uc?export=download&id={file_id_df_injury}'
+    # response_df_injury = requests.get(url_df_injury)
+    # df_injury = pd.read_csv(io.StringIO(response_df_injury.text), encoding='utf-8-sig')
     # Parsing tanggal
     df_injury['DATE_STANDARDIZED'] = pd.to_datetime(df_injury['DATE_STANDARDIZED'], errors='coerce')
     df_injury = df_injury.dropna(subset=['DATE_STANDARDIZED'])
@@ -377,10 +428,10 @@ def dashboard_page():
 
     # ---------------------------------------- PEMROSESEN ENTITAS DEATH ---------------------------------
     # df_death = pd.read_csv('data/tabel_entitas_death.csv')
-    file_id_df_death = '1tvelEKu3mS2LV7YFOzxqv7S0-by1QB0l'  # Ganti dengan file ID kamu
-    url_df_death = f'https://drive.google.com/uc?export=download&id={file_id_df_death}'
-    response_df_death = requests.get(url_df_death)
-    df_death = pd.read_csv(io.StringIO(response_df_death.text), encoding='utf-8-sig')
+    # file_id_df_death = '1tvelEKu3mS2LV7YFOzxqv7S0-by1QB0l'  # Ganti dengan file ID kamu
+    # url_df_death = f'https://drive.google.com/uc?export=download&id={file_id_df_death}'
+    # response_df_death = requests.get(url_df_death)
+    # df_death = pd.read_csv(io.StringIO(response_df_death.text), encoding='utf-8-sig')
 
     # Parsing tanggal
     df_death['DATE_STANDARDIZED'] = pd.to_datetime(df_death['DATE_STANDARDIZED'], errors='coerce')
