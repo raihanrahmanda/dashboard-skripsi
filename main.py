@@ -298,8 +298,8 @@ def dashboard_page():
     jumlah_kejadian = location_counts['jumlah'].sum()
 
     # === Load GeoJSON dan tambahkan data jumlah ===
-    # with open('data/batas_kabkota_jateng.geojson', encoding='utf-8') as f:
-    #     geojson_data = json.load(f)
+    with open('data/batas_kabkota_jateng.geojson', encoding='utf-8') as f:
+        geojson_data = json.load(f)
     
     # file_id_geo = '1ChrFijx7onjTqlNk-rbRXm6v8zvb8SRc'
     # output_path_geo = 'batas_kabkota_jateng.geojson'
@@ -312,18 +312,18 @@ def dashboard_page():
     # with open(output_path_geo, encoding='utf-8') as f:
     #     geojson_data = json.load(f)
 
-    file_id_geo = '1ChrFijx7onjTqlNk-rbRXm6v8zvb8SRc'
-    url_geo = f'https://drive.google.com/uc?export=download&id={file_id_geo}'
+    # file_id_geo = '1ChrFijx7onjTqlNk-rbRXm6v8zvb8SRc'
+    # url_geo = f'https://drive.google.com/uc?export=download&id={file_id_geo}'
     
-    response = requests.get(url_geo)
+    # response = requests.get(url_geo)
     
-    try:
-        geojson_data = response.json()
-    except Exception:
-        try:
-            geojson_data = json.loads(response.text)
-        except:
-            raise Exception("Gagal mengunduh atau memuat file GeoJSON.")
+    # try:
+    #     geojson_data = response.json()
+    # except Exception:
+    #     try:
+    #         geojson_data = json.loads(response.text)
+    #     except:
+    #         raise Exception("Gagal mengunduh atau memuat file GeoJSON.")
 
     for feature in geojson_data['features']:
         nama_asli = feature['properties']['WADMKK'].strip()
