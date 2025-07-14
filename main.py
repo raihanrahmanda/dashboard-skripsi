@@ -302,13 +302,15 @@ def dashboard_page():
     #     geojson_data = json.load(f)
     
     file_id_geo = '1ChrFijx7onjTqlNk-rbRXm6v8zvb8SRc'
-    url_geo = f'https://drive.google.com/uc?export=download&id={file_id_geo}'
-
-    response = requests.get(url_geo)
-    if response.status_code == 200 and 'application/json' in response.headers.get('Content-Type', ''):
-        geojson_data = response.json()
-    else:
-        raise Exception("Gagal mengunduh atau file bukan GeoJSON.")
+    output_path_geo = 'batas_kabkota_jateng.geojson'
+    url_geo = f'https://drive.google.com/uc?id={file_id_geo}'
+    
+    # Download file
+    gdown.download(url_geo, output_path_geo, quiet=False)
+    
+    # Buka file lokal
+    with open(output_path_geo, encoding='utf-8') as f:
+        geojson_data = json.load(f)
 
     for feature in geojson_data['features']:
         nama_asli = feature['properties']['WADMKK'].strip()
