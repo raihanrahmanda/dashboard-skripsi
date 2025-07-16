@@ -513,12 +513,12 @@ def get_chart_date():
     lokasi = request.args.get('lokasi')
 
     # df_date = pd.read_csv('data/tabel_entitas_loc.csv')
-    # file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
-    # url_df_date = f'https://drive.google.com/uc?export=download&id={file_id_df_date}'
-    # response_df_date = requests.get(url_df_date)
-    # df_date = pd.read_csv(io.StringIO(response_df_date.text), encoding='utf-8-sig')
-    file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'
-    df_date = load_csv_from_drive(file_id_df_date)
+    file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
+    url_df_date = f'https://drive.google.com/uc?export=download&id={file_id_df_date}'
+    response_df_date = requests.get(url_df_date)
+    df_date = pd.read_csv(io.StringIO(response_df_date.text), encoding='utf-8-sig')
+    # file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'
+    # df_date = load_csv_from_drive(file_id_df_date)
     
     df_date['DATE_STANDARDIZED'] = pd.to_datetime(df_date['DATE_STANDARDIZED'], errors='coerce')
     df_date = df_date.dropna(subset=['DATE_STANDARDIZED'])
