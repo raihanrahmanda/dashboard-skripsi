@@ -513,35 +513,35 @@ def get_chart_date():
     lokasi = request.args.get('lokasi')
 
     # df_date = pd.read_csv('data/tabel_entitas_loc.csv')
-    file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
-    url_df_date = f'https://drive.google.com/uc?export=download&id={file_id_df_date}'
-    response_df_date = requests.get(url_df_date)
-    df_date = pd.read_csv(io.StringIO(response_df_date.text), encoding='utf-8-sig')
-    # file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'
-    # df_date = load_csv_from_drive(file_id_df_date)
+    # file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
+    # url_df_date = f'https://drive.google.com/uc?export=download&id={file_id_df_date}'
+    # response_df_date = requests.get(url_df_date)
+    # df_date = pd.read_csv(io.StringIO(response_df_date.text), encoding='utf-8-sig')
+    file_id_df_loc = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'
+    df_loc = load_csv_from_drive(file_id_df_loc)
     
-    df_date['DATE_STANDARDIZED'] = pd.to_datetime(df_date['DATE_STANDARDIZED'], errors='coerce')
-    df_date = df_date.dropna(subset=['DATE_STANDARDIZED'])
-    df_date['month_year'] = df_date['DATE_STANDARDIZED'].dt.to_period('M').astype(str)
-    df_date['year'] = df_date['DATE_STANDARDIZED'].dt.year
-    df_date['LOC'] = df_date['LOC'].astype(str).str.strip().str.lower()
+    df_loc['DATE_STANDARDIZED'] = pd.to_datetime(df_loc['DATE_STANDARDIZED'], errors='coerce')
+    df_loc = df_loc.dropna(subset=['DATE_STANDARDIZED'])
+    df_loc['month_year'] = df_loc['DATE_STANDARDIZED'].dt.to_period('M').astype(str)
+    df_loc['year'] = df_loc['DATE_STANDARDIZED'].dt.year
+    df_loc['LOC'] = df_loc['LOC'].astype(str).str.strip().str.lower()
 
-    df_filtered = df_date.copy()
+    df_filtered_loc = df_loc.copy()
     if start_date:
-        df_filtered = df_filtered[df_filtered['DATE_STANDARDIZED'] >= start_date]
+        df_filtered_loc = df_filtered_loc[df_filtered_loc['DATE_STANDARDIZED'] >= start_date]
     if end_date:
-        df_filtered = df_filtered[df_filtered['DATE_STANDARDIZED'] <= end_date]
+        df_filtered_loc = df_filtered_loc[df_filtered_loc['DATE_STANDARDIZED'] <= end_date]
     if lokasi and lokasi != 'semua':
-        df_filtered = df_filtered[df_filtered['LOC'] == lokasi]
+        df_filtered_loc = df_filtered_loc[df_filtered_loc['LOC'] == lokasi]
 
     if periode == 'tahun':
-        counts = df_filtered.groupby('year').size().reset_index(name='jumlah')
-        labels_date = counts['year'].astype(str).tolist()
+        counts_loc = df_filtered_loc.groupby('year').size().reset_index(name='jumlah')
+        labels_date = counts_loc['year'].astype(str).tolist()
     else:
-        counts = df_filtered.groupby('month_year').size().reset_index(name='jumlah')
-        labels_date = counts['month_year'].tolist()
+        counts_loc = df_filtered_loc.groupby('month_year').size().reset_index(name='jumlah')
+        labels_date = counts_loc['month_year'].tolist()
 
-    data_date = counts['jumlah'].tolist()
+    data_date = counts_loc['jumlah'].tolist()
 
     return jsonify({'labels_date': labels_date, 'data_date': data_date})
 
