@@ -525,13 +525,14 @@ def get_chart_date():
     df_loc['month_year'] = df_loc['DATE_STANDARDIZED'].dt.to_period('M').astype(str)
     df_loc['year'] = df_loc['DATE_STANDARDIZED'].dt.year
     df_loc['LOC'] = df_loc['LOC'].astype(str).str.strip().str.lower()
-
+   
     df_filtered_loc = df_loc.copy()
     if start_date:
         df_filtered_loc = df_filtered_loc[df_filtered_loc['DATE_STANDARDIZED'] >= start_date]
     if end_date:
         df_filtered_loc = df_filtered_loc[df_filtered_loc['DATE_STANDARDIZED'] <= end_date]
     if lokasi and lokasi != 'semua':
+        lokasi = lokasi.strip().lower()
         df_filtered_loc = df_filtered_loc[df_filtered_loc['LOC'] == lokasi]
 
     if periode == 'tahun':
