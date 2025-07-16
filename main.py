@@ -519,6 +519,7 @@ def get_chart_date():
     # df_date = pd.read_csv(io.StringIO(response_df_date.text), encoding='utf-8-sig')
     file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'
     df_date = load_csv_from_drive(file_id_df_date)
+    
     df_date['DATE_STANDARDIZED'] = pd.to_datetime(df_date['DATE_STANDARDIZED'], errors='coerce')
     df_date = df_date.dropna(subset=['DATE_STANDARDIZED'])
     df_date['month_year'] = df_date['DATE_STANDARDIZED'].dt.to_period('M').astype(str)
