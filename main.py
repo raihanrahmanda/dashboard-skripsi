@@ -512,9 +512,6 @@ def get_chart_date():
     end_date = request.args.get('end_date')
     lokasi = request.args.get('lokasi')
 
-    print("List lokasi unik di df_loc:", df_loc['LOC'].unique())
-    print("Nilai lokasi filter:", lokasi)
-
     # df_date = pd.read_csv('data/tabel_entitas_loc.csv')
     # file_id_df_date = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'  # Ganti dengan file ID kamu
     # url_df_date = f'https://drive.google.com/uc?export=download&id={file_id_df_date}'
