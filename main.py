@@ -65,7 +65,7 @@ def download_classification_table():
     return send_file(file_path, as_attachment=True)
 
 @lru_cache(maxsize=32)
-def load_csv_from_drive(file_id):
+def load_csv_from_drive(file_id, version=None):
     """Mengunduh dan cache CSV dari Google Drive berdasarkan file ID."""
     url = f'https://drive.google.com/uc?export=download&id={file_id}'
     response = requests.get(url)
@@ -85,43 +85,43 @@ def dashboard_page():
     # ---------------------------- MENDEFINISIKAN DATAFRAME ----------------------------------------
     # VEHICLE
     file_id_df_vehicle = '14c_MceTk8eCzDTI51rKTt71zOTqpAVv4'
-    df_vehicle = load_csv_from_drive(file_id_df_vehicle)
+    df_vehicle = load_csv_from_drive(file_id_df_vehicle, version=int(time.time() // 3600))
     
     # MERK
     file_id_df_merk = '1ioai7ykYF03Fygob0n33nYEMKItNUhTV'
-    df_merk = load_csv_from_drive(file_id_df_merk)
+    df_merk = load_csv_from_drive(file_id_df_merk, version=int(time.time() // 3600))
     
     # DAY
     file_id_df_day = '1PRtJNgPbrp8QsRwGgVgDIIiaeMR3O8jO'
-    df_day = load_csv_from_drive(file_id_df_day)
+    df_day = load_csv_from_drive(file_id_df_day, version=int(time.time() // 3600))
     
     # AGE
     file_id_df_age = '1hRCPZJrY-F58bgpq_WoU-Mgram4VBONK'
-    df_age = load_csv_from_drive(file_id_df_age)
+    df_age = load_csv_from_drive(file_id_df_age, version=int(time.time() // 3600))
     
     # ROAD
     file_id_df_road = '1OhnmkIPjgVw54jnJmijOFcaGNiDMnEaN'
-    df_road = load_csv_from_drive(file_id_df_road)
+    df_road = load_csv_from_drive(file_id_df_road, version=int(time.time() // 3600))
     
     # TIME
     file_id_df_time = '1SMJzG1kfiZRBo7lnTIitrXR6nL_GIZSY'
-    df_time = load_csv_from_drive(file_id_df_time)
+    df_time = load_csv_from_drive(file_id_df_time, version=int(time.time() // 3600))
     
     # CAUSE
     file_id_df_cause = '1qAxMIeLcH9zL70JShSsvHY_pBOf3eQpQ'
-    df_cause = load_csv_from_drive(file_id_df_cause)
+    df_cause = load_csv_from_drive(file_id_df_cause, version=int(time.time() // 3600))
     
     # LOC
     file_id_df_loc = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'
-    df_loc = load_csv_from_drive(file_id_df_loc)
+    df_loc = load_csv_from_drive(file_id_df_loc, version=int(time.time() // 3600))
     
     # INJURY
     file_id_df_injury = '1CPoPNFhkNQgihWhzp2CZOtpKsonKQEV7'
-    df_injury = load_csv_from_drive(file_id_df_injury)
+    df_injury = load_csv_from_drive(file_id_df_injury, version=int(time.time() // 3600))
     
     # DEATH
     file_id_df_death = '1tvelEKu3mS2LV7YFOzxqv7S0-by1QB0l'
-    df_death = load_csv_from_drive(file_id_df_death)
+    df_death = load_csv_from_drive(file_id_df_death, version=int(time.time() // 3600))
     
     # --------------------------------- PEMROSESEN ENTITAS KENDARAAN ---------------------------------
     # Entitas Jenis Kendaraan 
@@ -518,7 +518,7 @@ def get_chart_date():
     # response_df_date = requests.get(url_df_date)
     # df_date = pd.read_csv(io.StringIO(response_df_date.text), encoding='utf-8-sig')
     file_id_df_loc = '1lLyT7xo0THBnvfEl8MAH663Pnzu8hDZE'
-    df_loc = load_csv_from_drive(file_id_df_loc)
+    df_loc = load_csv_from_drive(file_id_df_loc, version=int(time.time() // 3600))
     
     df_loc['DATE_STANDARDIZED'] = pd.to_datetime(df_loc['DATE_STANDARDIZED'], errors='coerce')
     df_loc = df_loc.dropna(subset=['DATE_STANDARDIZED'])
@@ -558,7 +558,7 @@ def get_chart_injury():
     # response_df_injury = requests.get(url_df_injury)
     # df_injury = pd.read_csv(io.StringIO(response_df_injury.text), encoding='utf-8-sig')
     file_id_df_injury = '1CPoPNFhkNQgihWhzp2CZOtpKsonKQEV7'
-    df_injury = load_csv_from_drive(file_id_df_injury)
+    df_injury = load_csv_from_drive(file_id_df_injury, version=int(time.time() // 3600))
 
     # Parsing tanggal
     df_injury['DATE_STANDARDIZED'] = pd.to_datetime(df_injury['DATE_STANDARDIZED'], errors='coerce')
@@ -613,7 +613,7 @@ def get_chart_death():
     # df_death = pd.read_csv(io.StringIO(response_df_death.text), encoding='utf-8-sig')
 
     file_id_df_death = '1tvelEKu3mS2LV7YFOzxqv7S0-by1QB0l' 
-    df_death = load_csv_from_drive(file_id_df_death)
+    df_death = load_csv_from_drive(file_id_df_death, version=int(time.time() // 3600))
 
     # Parsing tanggal
     df_death['DATE_STANDARDIZED'] = pd.to_datetime(df_death['DATE_STANDARDIZED'], errors='coerce')
@@ -667,7 +667,7 @@ def generate_wordcloud_cause_route(): # Ubah nama fungsi agar unik
     # response_df_cause = requests.get(url_df_cause)
     # df_cause = pd.read_csv(io.StringIO(response_df_cause.text), encoding='utf-8-sig')
     file_id_df_cause = '1qAxMIeLcH9zL70JShSsvHY_pBOf3eQpQ'
-    df_cause = load_csv_from_drive(file_id_df_cause)
+    df_cause = load_csv_from_drive(file_id_df_cause, version=int(time.time() // 3600))
     df_cause['DATE_STANDARDIZED'] = pd.to_datetime(df_cause['DATE_STANDARDIZED'], errors='coerce')
     # Jangan filter 'Lainnya' di sini jika ingin tetap ada kemungkinan muncul di wordcloud
     df_cause = df_cause[df_cause['CAUSE_CATEGORY'] != 'Lainnya'] 
@@ -753,7 +753,7 @@ def load_scraping_data():
         # df_result = pd.read_csv(io.StringIO(response.text), encoding='utf-8-sig')
 
         file_id = '1zWMM271sKPLeawwJ_uM_rKIVP_Di0pZS'
-        df_result = load_csv_from_drive(file_id)
+        df_result = load_csv_from_drive(file_id, version=int(time.time() // 3600))
 
         # Ambil tanggal terbaru
         tanggal_terbaru = df_result['news_date'].max()
@@ -789,7 +789,7 @@ def load_combine_news():
         # df_news = pd.read_csv(io.StringIO(response_df_news.text), encoding='utf-8-sig')
 
         file_id_df_news = '1HnI-nKfqtObiVQE7L7lrKNo9UQu08R6y' 
-        df_news = load_csv_from_drive(file_id_df_news)
+        df_news = load_csv_from_drive(file_id_df_news, version=int(time.time() // 3600))
 
         # ================================= df_news_new =========================================
         # df_news_new = pd.read_csv('data/berita_relevan_unik.csv', encoding='utf-8-sig')
@@ -824,7 +824,7 @@ def load_extraction_news():
         # df_extraction = pd.read_csv(io.StringIO(response_df_extraction.text), encoding='utf-8-sig')
         
         file_id_df_extraction = '1ycl0Sy5hAALWiaNCa9XI3a9ddMdPWAyU'
-        df_extraction = load_csv_from_drive( file_id_df_extraction)
+        df_extraction = load_csv_from_drive( file_id_df_extraction, version=int(time.time() // 3600))
         
         df_extraction = df_extraction.replace({np.nan: None})
 
@@ -847,7 +847,7 @@ def load_classification_data():
         # df_classification = pd.read_csv(io.StringIO(response_df_classification.text), encoding='utf-8-sig')
 
         file_id_df_classification = '1GKsX4CO3EasjcYQjvRJqOBORFWx-PFZ4'
-        df_classification = load_csv_from_drive(file_id_df_classification)
+        df_classification = load_csv_from_drive(file_id_df_classification, version=int(time.time() // 3600))
         
         df_classification = df_classification.replace({np.nan: None})
 
